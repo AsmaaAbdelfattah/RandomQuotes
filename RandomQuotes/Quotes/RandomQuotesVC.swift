@@ -9,11 +9,15 @@ import UIKit
 
 class RandomQuotesVC: UIViewController {
 
+    @IBOutlet weak var quoteLbl: UILabel!
+    @IBOutlet weak var quoteBtn: UIButton!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
 
+    @IBAction func quoteBtnTapped(_ sender: Any) {
+    }
 }
 
