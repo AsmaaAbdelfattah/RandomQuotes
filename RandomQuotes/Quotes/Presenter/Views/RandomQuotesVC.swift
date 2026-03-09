@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import Combine
-
 
 class RandomQuotesVC: UIViewController {
 
@@ -20,7 +18,7 @@ class RandomQuotesVC: UIViewController {
    
     //MARK: vars
     let viewModel = getQuotesViewModel()
-    var cancellable = Set<AnyCancellable>()
+  
     
     //MARK: life cycle
     override func viewWillAppear(_ animated: Bool) {
@@ -33,9 +31,11 @@ class RandomQuotesVC: UIViewController {
     }
 
     func bindQuote(){
-        viewModel.$quote.receive(on: DispatchQueue.main).sink {[weak self] quote in
-            self?.quoteLbl.text = quote
-        }.store(in: &cancellable)
+        viewModel.quote.bind { [weak self] quote in
+            DispatchQueue.main.async {
+                self?.quoteLbl.text = quote
+            }
+        }
     }
 
     @IBAction func quoteBtnTapped(_ sender: Any) {

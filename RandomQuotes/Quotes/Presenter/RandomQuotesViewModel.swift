@@ -14,7 +14,7 @@ protocol RandomQuotesViewModelProtocol{
 }
 class RandomQuotesViewModel:RandomQuotesViewModelProtocol {
    
-    @Published var quote:String = ""
+    var quote:Observable<String> = Observable(value: "")
     let quotesUseCase:RandomQuotesUseCaseProtocol
     
     init( quotesUseCase: RandomQuotesUseCaseProtocol) {
@@ -26,7 +26,7 @@ class RandomQuotesViewModel:RandomQuotesViewModelProtocol {
         quotesUseCase.getRandomQuote { [weak self] result in
             switch result {
             case .success(let success):
-                self?.quote = success.quote
+                self?.quote.value = success.quote
             case .failure(let failure):
                 print(failure.localizedDescription)
             }
