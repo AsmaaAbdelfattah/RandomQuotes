@@ -24,18 +24,24 @@ class NetworkManager: NetworkManagerProtocol{
         
         URLSession.shared.dataTask(with: URL){ response, _, failure in
             
-            if let error = failure{
+            if let error = failure {
+                complition(.failure(error))
+                return
+            }
+            
+            guard let data = response else {
+                complition(.failure(NSError(domain: "No data", code: 404)))
+                return
+            }
+            
+            
+            do{
+                let result = try JSONDecoder().decode(T.self, from: data)
+                complition(.success(result))
+            }catch{
                 complition(.failure(error))
             }
             
-            if let data = response{
-                do{
-                    let result = try JSONDecoder().decode(T.self, from: data)
-                    complition(.success(result))
-                }catch{
-                    complition(.failure(error))
-                }
-            }
             
             
         }.resume()

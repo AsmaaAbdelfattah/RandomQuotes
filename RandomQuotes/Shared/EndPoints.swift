@@ -8,7 +8,7 @@
 import Foundation
 enum EndPoints{
     
-    private var baseUrl: String { return "https://api.quotable.io/"}
+    private var baseUrl: String { return "https://dummyjson.com/quotes/"}
     
     case random
     case tages
